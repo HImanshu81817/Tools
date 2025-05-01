@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Online Image Compressor - Reduce image size while maintaining quality. Supports JPG, PNG, and WebP formats.">
+    <title>OptimizeIMG - Free Online Image Compression Tool</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #6E48AA;
+            --background: #f8f9fa;
+            --text: #2d3748;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tool-container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .upload-section {
+            border: 2px dashed #cbd5e0;
+            border-radius: 0.75rem;
+            padding: 3rem 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .upload-section:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+
+        #imageInput {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .custom-file-input {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .custom-file-input:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .controls {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .quality-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+        }
+
+        .quality-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .preview-card {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            padding: 1rem;
+            background: #f8fafc;
+        }
+
+        .stats {
+            padding: 1rem;
+            background: #f8fafc;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .ad-banner {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .preview-container {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-img {
+                height: 250px;
+            }
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header Ad -->
+        <div class="ad-banner">
+            <!-- AdSense code here -->
+        </div>
+
+        <div class="header">
+            <h1>OptimizeIMG</h1>
+            <p>Compress images without losing quality</p>
+        </div>
+
+        <div class="tool-container">
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*">
+                <label for="imageInput" class="custom-file-input">
+                    Choose Image
+                </label>
+                <p class="drag-text">or drag and drop files here</p>
+            </div>
+
+            <div class="controls">
+                <div class="slider-container">
+                    <label>Compression Level: <span id="qualityValue">80</span>%</label>
+                    <input type="range" class="quality-slider" id="quality" min="1" max="100" value="80">
+                </div>
+                <button class="button" onclick="compressImage()">Compress Now</button>
+            </div>
+
+            <div class="preview-container">
+                <div class="preview-card">
+                    <img id="originalPreview" class="preview-img" alt="Original preview">
+                    <div class="stats">
+                        <h4>Original Image</h4>
+                        <p id="originalStats">-</p>
+                    </div>
+                </div>
+
+                <div class="preview-card">
+                    <img id="compressedPreview" class="preview-img" alt="Compressed preview">
+                    <div class="stats">
+                        <h4>Compressed Image</h4>
+                        <p id="compressedStats">-</p>
+                        <a id="downloadBtn" style="display: none;">
+                            <button class="button" style="margin-top: 1rem;">Download</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Ad -->
+        <div class="ad-banner">
+            <!-- AdSense code here -->
+        </div>
+    </div>
+
+    <script>
+        // Existing JavaScript code with added loading state
+        const loading = document.getElementById('loading');
+        
+        async function compressImage() {
+            try {
+                loading.style.display = 'flex';
+                // Existing compression logic
+                // Add await for any async operations
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Add drag and drop functionality
+        const uploadSection = document.querySelector('.upload-section');
+        
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.style.borderColor = var(--primary);
+        });
+
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            handleImage(file);
+        });
+
+        // Update file input handling
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            handleImage(e.target.files[0]);
+        });
+
+        function handleImage(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('originalPreview').src = event.target.result;
+                document.getElementById('originalStats').textContent = 
+                    ${(file.size / 1024).toFixed(2)} KB`;
+            }
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
