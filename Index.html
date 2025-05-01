@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolKit - Online Image & PDF Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --accent: #ec4899;
+            --background: #f8fafc;
+            --text: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-grid {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .category-section {
+            margin: 4rem 0;
+            padding: 0 2rem;
+        }
+
+        .category-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            background: var(--secondary);
+        }
+
+        .featured-tools {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="logo">ToolKit</a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#tools">Tools</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Your All-in-One Digital Toolkit</h1>
+        <p>Transform, convert, and optimize files with our powerful online tools</p>
+        <a href="#tools" class="cta-button">Explore Tools</a>
+    </section>
+
+    <section class="category-section">
+        <div class="category-header">
+            <h2 class="category-title">Image Tools</h2>
+            <p>Edit, convert, and optimize images effortlessly</p>
+        </div>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <i class="fas fa-file-image tool-icon"></i>
+                <h3>Image Compressor</h3>
+                <p>Reduce image size without quality loss</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-crop tool-icon"></i>
+                <h3>Image Resizer</h3>
+                <p>Adjust dimensions and aspect ratio</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-exchange-alt tool-icon"></i>
+                <h3>Format Converter</h3>
+                <p>Convert between JPG, PNG, WEBP</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-section">
+        <div class="category-header">
+            <h2 class="category-title">PDF Tools</h2>
+            <p>Manipulate PDF documents with ease</p>
+        </div>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <i class="fas fa-file-pdf tool-icon"></i>
+                <h3>PDF Compressor</h3>
+                <p>Reduce PDF file size</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-file-merge tool-icon"></i>
+                <h3>PDF Merger</h3>
+                <p>Combine multiple PDFs</p>
+            </div>
+            <div class="tool-card">
+                <i class="fas fa-lock tool-icon"></i>
+                <h3>PDF Protector</h3>
+                <p>Add password protection</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-tools">
+        <div class="category-header">
+            <h2 class="category-title">Featured Tools</h2>
+        </div>
+        <div class="tool-grid">
+            <!-- Add featured tools here -->
+        </div>
+    </section>
+
+    <footer>
+        <!-- Add footer content -->
+    </footer>
+</body>
+</html>
